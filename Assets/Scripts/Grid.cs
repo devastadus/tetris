@@ -9,6 +9,7 @@ public class Grid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 	
 	}
 	
@@ -22,7 +23,9 @@ public class Grid : MonoBehaviour {
 	}
 
 	public static bool insideBorder(Vector2 pos){
-		return((int)pos.x >=0 && (int)pos.x < w &&(int)pos.y >0);
+		return((int)pos.x >=0 && 
+            (int)pos.x < w &&
+            (int)pos.y >0);
 	}
 
 	public static void deleteRow(int y){
@@ -42,4 +45,39 @@ public class Grid : MonoBehaviour {
 			}
 		}
 	}
+
+    public static void decreaseRowAbove(int y)
+    {
+        for (int i = y; i < h; i++)
+        {
+            decreaseRow(i);
+        }
+    }
+
+    public static bool isRowFull(int y)
+    {
+        for (int x = 0; x < w; x++)
+        {
+            if (grid[x,y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void deleteFullRows()
+    {
+        for (int y = 0; y < h; y++)
+        {
+            if (isRowFull(y))
+            {
+                deleteRow(y);
+                decreaseRowAbove(y+1);
+                --y;
+            }
+            
+        }
+    }
+
 }
